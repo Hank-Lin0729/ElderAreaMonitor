@@ -20,8 +20,7 @@
 1. **安裝相依套件**：
 
    ```
-  pip install flask sqlite3 werkzeug
-  
+   pip install flask sqlite3 werkzeug
    ```
 
 
