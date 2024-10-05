@@ -21,6 +21,7 @@
 
    ```
   pip install flask sqlite3 werkzeug
+  
    ```
 
 
@@ -32,6 +33,7 @@
 
 ```
 python app.py
+
 ```
 
 應用程式將會在 `http://localhost:10000` 啟動。
