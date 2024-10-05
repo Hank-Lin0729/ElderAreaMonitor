@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            長者監測
+        </title>
+        <meta charset="utf-8">
+        <meta name="description" content="A minimal and responsive HTML5 landing page built on lightweight, clean and customizable code.">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+    <body>
+        <div style="text-align:center">
+            <header class="header-main light font-size-xxxss">
+                <nav>
+                  <div class="nav-toggle"></div>
+                  <ul class="inline">
+                    <li><a href="#" class="active"><span id="systemText" style="color: #ec8ada">居家照護～長者活動監測設定　　　</span></a></li>
+                    <li><a href="#"><span id="z">時間：</span><span id="time"></span><span>　　</span></a></li>
+                    <li><a href="./index" class="font-size-xxxss"><button class="bg-gradient-primary dark">前端</button></a></li>
+                  </ul>
+                </nav>
+              </header>
+        </div>
+<br><br><br><br><br>
+<div class="setting-container " style="margin-top: 20px;">
+    <form id="reminder-setting-form">
+        <span>　</span><label for="person" class="font-size-xxxss">人物：</label>
+        <select id="person" name="person" required class="font-size-xxxss">
+            <option value="104">104</option>
+            <option value="105">105</option>
+            <option value="106">106</option>
+        </select><br><br>
+
+        <span>　</span><label for="location" class="font-size-xxxss">位置：</label>
+        <select id="location" name="location" required class="font-size-xxxss" style="height: auto;">
+            <option value="房間">房間</option>
+            <option value="餐廳">餐廳</option>
+        </select><br><br>
+
+        <label for="datetime" class="font-size-xxxss">日期時間：</label>
+        <input type="datetime-local" id="datetime" name="datetime" required><br><br>
+
+        <span>　</span><label for="message" class="font-size-xxxss">提醒事項：</label>
+        <input type="text" id="message" name="message" required class="font-size-xxxss"><br><br>
+
+        <button type="button" onclick="setReminder()" class="font-size-xxxss bg-gradient-cyan light">設置提醒</button>
+    </form>
+</div>
+
+
+        
+        <script>
+            function setReminder() {
+                const person = document.getElementById('person').value;
+                const location = document.getElementById('location').value;
+                const datetime = document.getElementById('datetime').value;
+                const message = document.getElementById('message').value;
+            
+
+                console.log(`設置提醒 - 人物: ${person}, 位置: ${location}, 日期時間: ${datetime}, 提醒事項: ${message}`);
+            
+
+                document.getElementById('reminder-setting-form').reset();
+            
+                alert('提醒設置成功！');
+            }
+            
+            
+        </script>
+        <script src="{{ url_for('static', filename='main.js') }}"></script>
+    </body>

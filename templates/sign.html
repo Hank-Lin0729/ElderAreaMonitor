@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="A minimal and responsive HTML5 landing page built on lightweight, clean and customizable code.">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <title>登入</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+        }
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-input {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .form-input input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: space-between; 
+        }
+        .button {
+            flex-grow: 1; 
+            padding: 10px;
+            margin: 5px; 
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>登入</h2>
+        <form action="/login" method="post">
+            <div class="form-input">
+                <label for="username">用戶名:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-input">
+                <label for="password">密碼:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="button"style="width: 97%; font-size:23px">登入</button>
+        </form>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <div class="buttons-container">
+            <button onclick="window.location.href='/register';" class="button" style="font-size:20px">註冊</button>
+            <button onclick="window.location.href='/setting';" class="button" style="font-size:20px">設定</button>
+        </div>
+    </div>
+</body>
+</html>

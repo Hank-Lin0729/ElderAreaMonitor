@@ -1,0 +1,4 @@
+Werkzeug
+Flask
+requests
+line-bot-sdk

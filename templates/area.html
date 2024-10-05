@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        長者監測
+    </title>
+    <meta charset="utf-8">
+    <meta name="description" content="A minimal and responsive HTML5 landing page built on lightweight, clean and customizable code.">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+
+<body>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2><span id="nameid"></span>監測視窗</h2>
+            <h3 style="text-align: center;" id="people_model">區域<span id="manypeople"></span>人</h3>
+            <table border="1" id="modal-table">
+                <tr style="background-color: lightblue; font-size : xx-large;     text-align: center; font-weight:bold;">
+                    <td>目前在此區域的<span id="nameid"></span>長者</td>
+                </tr>
+                <tbody id="data-table" style="text-align: center; ">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="text-align:center">
+        <header class="header-main light font-size-xxxss">
+            <nav>
+                <div class="nav-toggle"></div>
+                <ul class="inline">
+                    <li><a href="#" class="active"><span id="systemText" style="color: #ec8ada">居家照護～活動區域監測　　　</span></a></li>
+                    <li><a href="#"><span id="z">時間：</span><span id="time"></span><span>　　</span></a></li>
+                    <li><a href="./index" class="font-size-xxxss"><button class="bg-gradient-primary dark">長者監測</button></a></li>
+                    <li><a href="./login"><button id="sign-out" style="font-size:x-large;background-color: #007bff;color: white;" onclick="signout()">登出</button></a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+
+    <br><br><br><br><br>
+    <main>
+
+        <div class="place-container">
+
+            <div class="place-card" data-area="room" onclick="openModal('room')">
+                <div class="image-overlay">
+                    <img class="place-image opacity-xm" src="{{ url_for('static', filename='room.jpg') }}" alt="104">
+                    <div class="overlay-text-mid-bot ">
+                        <h1 class="font-width-big dark" style="font-size:100px">房間</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="place-card" data-area="dinner" onclick="openModal('dinner')">
+                <div class="image-overlay">
+                    <img class="place-image opacity-xm" src="{{ url_for('static', filename='dinner.jpg') }}" alt="105">
+                    <div class="overlay-text-mid-bot ">
+                        <h1 class="font-width-big dark" style="font-size:100px">餐廳</h1>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="place-card" data-area="danger" onclick="openModal('danger')">
+                <div class="image-overlay">
+                    <img class="place-image opacity-xm" src="{{ url_for('static', filename='danger.jpg') }}" alt="106">
+                    <div class="overlay-text-mid-bot dark">
+                        <h1 class="font-width-big" style="font-size:100px">危險區域</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='home.png') }}" alt="Home">
+        </div>
+
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            fetchDataAndUpdateUI('/data/room', 'room-people');
+
+            fetchDataAndUpdateUI('/data/dinner', 'dinner-people');
+
+            fetchDataAndUpdateUI('/data/danger', 'danger-people');
+        });
+
+        function fetchDataAndUpdateUI(endpoint, elementId) {
+            fetch(endpoint)
+                .then(response => response.json())
+                .then(data => {
+                    const people = data.room_people;
+                    if (people) {
+                        document.getElementById(elementId).textContent = people;
+                    } else {
+                        document.getElementById(elementId).textContent = 'None';
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.place-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const area = this.getAttribute('data-area');
+                    openModal(area);
+                });
+            });
+        });
+
+        function openModal(area) {
+            fetch(`/data/${area}`)
+                .then(response => response.json())
+                .then(data => {
+                    const modal = document.getElementById('myModal');
+                    const nameIdSpan = document.getElementById('nameid');
+                    const dataTable = document.getElementById('data-table');
+                    const capacitySpan = document.getElementById('manypeople');
+
+                    nameIdSpan.textContent = area.charAt(0).toUpperCase() + area.slice(1);
+                    dataTable.innerHTML = '';
+
+                    let intruderCount = 0;
+
+                    const key = `${area}_people`;
+                    data.forEach(person => {
+                        const info = person[key] || 'Unknown';
+                        const row = `<tr><td>${info}</td></tr>`;
+                        dataTable.innerHTML += row;
+                        intruderCount += 1;
+                    });
+
+                    if (area === 'danger') {
+                        capacitySpan.textContent = '誤闖人數: ' + intruderCount;
+                        if (intruderCount >= 1) {
+                            capacitySpan.style.color = 'red';
+                            document.getElementById('people_model').style.color = 'red'
+                        }
+                    } else {
+
+                        capacitySpan.textContent = '可容納人數: ' + (10 - intruderCount);
+                        capacitySpan.style.color = 'black';
+                        document.getElementById('people_model').style.color = 'black'
+                    }
+
+                    modal.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to fetch data for the area.');
+                });
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>

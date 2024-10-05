@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            長者監測
+        </title>
+        <meta charset="utf-8">
+        <meta name="description" content="A minimal and responsive HTML5 landing page built on lightweight, clean and customizable code.">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+    <body>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2><span id="nameid"></span>長者監測視窗</h2>
+                <table border="1" id="modal-table">
+                    <tr style="background-color: lightblue; font-size : xx-large;     text-align: center; font-weight:bold;">
+                        <td>時間</td>
+                        <td>位置</td>
+                    </tr>
+                    <tbody id="data-table" style="text-align: center; ">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="text-align:center">
+            <header class="header-main light font-size-xxxss">
+                <nav>
+                  <div class="nav-toggle"></div>
+                  <ul class="inline">
+                    <li><a href="#" class="active"><span id="systemText" style="color: #ec8ada">居家照護～長者活動監測　　　</span></a></li>
+                    <li><a href="#"><span id="z">時間：</span><span id="time"></span><span>　　</span></a></li>
+                    <li><a href="./area" class="font-size-xxxss"><button class="bg-gradient-primary dark">區域監測</button></a></li>
+                    <li><a href="./login"><button id="sign-out" style="font-size:x-large;background-color: #007bff;color: white;" onclick="signout()">登出</button></a></li>
+                  </ul>
+                </nav>
+              </header>
+        </div>
+
+<br><br><br><br><br>
+<main>
+
+    <div class="place-container">
+
+        <div class="place-card">
+                <div class="image-overlay"> 
+                    <img class="place-image opacity-xm" src="{{ url_for('static', filename='104.jpg') }}" alt="104">
+                    <div class="overlay-text ">
+                        <h1 class="dark">104</h1>
+                    </div>
+                </div>
+                <br>
+                <h3 style="text-align: center;">所在區域<span id="104-place" class="color-red"></span></h3>
+                <h5 class="mange-h5-gray">____________________________</h5>
+                <br>
+                <h2 style="text-align: center;">注意事項</h2>
+                <br><br>
+                <h5 style="text-align: center;" id="104-Watch-out">暫無事項</h5>
+                <br><br>
+        </div>
+        
+
+
+        <div class="place-card">
+                <div class="image-overlay"> 
+                    <img class="place-image opacity-xm" src="{{ url_for('static', filename='105.jpg') }}" alt="105">
+                    <div class="overlay-text ">
+                        <h1 class="dark">105</h1>
+                    </div>
+                </div>
+                <br>
+                <h3 style="text-align: center;">所在區域<span id="105-place" class="color-red"></span></h3>
+                <h5 class="mange-h5-gray">____________________________</h5>
+                <br>
+                <h2 style="text-align: center;">注意事項</h2>
+                <br><br>
+                <h5 style="text-align: center;"  id="105-Watch-out">暫無事項</h5>
+                <br><br>
+
+        </div>
+
+
+        <div class="place-card">
+                <div class="image-overlay"> 
+                    <img class="place-image opacity-xm" src="{{ url_for('static', filename='106.jpg') }}" alt="106">
+                    <div class="overlay-text ">
+                        <h1 class="dark">106</h1>
+                    </div>
+                </div>
+                <br>
+                <h3 style="text-align: center;">所在區域<span id="106-place" class="color-red"></span></h3>
+                <h5 class="mange-h5-gray">____________________________</h5>
+                <br>
+                <h2 style="text-align: center;">注意事項</h2>
+                <br><br>
+                <h5 style="text-align: center;" id="106-Watch-out">暫無事項</h5>
+                <br><br>
+
+        </div>
+        </div>
+        <table>
+            <tr >
+                <td><button id="lunch-button" onclick="toggleLunchSimulation()" class="bg-gradient-blue dark font-size-xxxss">模擬午餐時間</button></td>
+                <td><button id="long-time-button" onclick="simulateLongTime()" class="bg-gradient-blue dark font-size-xxxss">模擬長時間長者在固定區域</button></td>
+                <td><a href="./setting"><button class="bg-gradient-blue dark font-size-xxxss">設定端</button></a></td>
+            </tr>
+        </table>
+    </main>
+
+        <script src="{{ url_for('static', filename='main.js') }}"></script>
+    </body>
+</html>
